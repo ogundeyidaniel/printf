@@ -1,29 +1,45 @@
 #ifndef MAIN_H
 #define MAIN_H
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
+
+#include <stdarg.h> /*for varyadic functions*/
+#include <stdlib.h> /*for malloc and NULL*/
+#include <unistd.h> /*for write*/
+#include <limits.h> /* for test cases*/
+
 /**
- * struct printf_struct - structure
- * @p_str: pointer.
- * @f: variable.
- *
- * Description: array.
+ * struct special_cases - struct for the special cases
+ * @match: the special character to match after find a percentage
+ * @function: the associated function to be called in each specialcase
  */
 
-typedef struct printf_struct
+typedef struct special_cases
 {
-	char *p_str;
-	int (*f)(va_list x);
-} strct;
+	char *match;
+	int (*function)(va_list);
+} spc_t;
 
-int _putchar(char c);
+/*format and print data*/
 int _printf(const char *format, ...);
-int printf_char(va_list list);
-int printf_str(va_list list);
-int printf_porc(va_list list);
-int printf_digit(va_list list);
-int printf_reversed(va_list list);
-int aux(int arg);
-int (*get_function(char c))(va_list a);
-#endif
+
+/*writes the character c to stdout*/
+int _putchar(char c);
+
+/*search for match and execute the function according to this*/
+int (*mod_character_s(const char *next, int dino))(va_list);
+
+/*prints a char*/
+int print_char(va_list c);
+
+/*prints a string */
+int print_string(va_list s);
+
+/*converts a string to an integer and prints its content.*/
+int print_number(va_list i);
+
+/*converts a string to an unsigned integer and prints its content*/
+int print_unsigned(va_list u);
+
+/*prints a string in reverse*/
+int print_reverse(va_list r);
+
+#endif /* MAIN_H */

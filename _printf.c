@@ -1,41 +1,41 @@
 #include "main.h"
 /**
- * _printf - funtion that print.
- * @format: const char type.
- * Return: Number of digits.
+ * _printf - format and print data
+ * @format: string to print
+ * Return: length, or -1 in case of failure
  */
 int _printf(const char *format, ...)
 {
-	va_list list;
-	int cont = 0, i = -1;
-	int (*z)(va_list);
+	va_list call;
+	unsigned int i, length = 0;
 
-	va_start(list, format);
+	va_start(call, format);
 
-	if (format != NULL)
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
+	for (i = 0; format[i] != '\0'; i++) /*runs along the chain*/
 	{
-		i = 0;
-		for (; format[cont] != '\0'; i++, cont++)
+		if (format[i] == '%')
 		{
-			if (format[cont] != '%')
-				_putchar(format[cont]);
-			else if (format[cont] == '%' && format[cont + 1] == '\0')
-			{
-				return (-1);
+			if (format[i + 1] == '%')
+			{   _putchar('%');
+				i = i + 1;
+				length++;
 			}
-			else if (format[cont] == '%' && format[cont + 1] != '\0')
-			{
-				z = get_function(format[cont + 1]);
-				if (z == NULL)
-					_putchar(format[cont]);
-				else
-				{
-					i = (i + z(list)) - 1;
-					cont++;
-				}
+			else if (mod_character_s(format, i + 1) != '\0')
+			{   length += mod_character_s(format, i + 1)(call);
+				i = i + 1;
+			}
+			else
+			{ _putchar(format[i]);
+				length++;
 			}
 		}
+		else
+		{ _putchar(format[i]);
+			length++;
+		}
 	}
-	va_end(list);
-	return (i);
+	va_end(call);
+	return (length);
 }
