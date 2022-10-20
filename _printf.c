@@ -1,41 +1,47 @@
 #include "main.h"
 /**
- * _printf - format and print data
- * @format: string to print
- * Return: length, or -1 in case of failure
- */
+* _printf - main function to print in console
+* @format: array to print and check type
+* Return: count of character printed
+**/
 int _printf(const char *format, ...)
 {
-	va_list call;
-	unsigned int i, length = 0;
+	int count = -1;
 
-	va_start(call, format);
-
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-	for (i = 0; format[i] != '\0'; i++) /*runs along the chain*/
+	if (format != NULL)
 	{
-		if (format[i] == '%')
+		int i;
+		va_list ar_list;
+		int (*o)(va_list);
+
+		va_start(ar_list, format);
+
+		if (format[0] == '%' && format[1] == '\0')
+			return (-1);
+
+		count = 0;
+
+		for (i = 0; format[i] != '\0'; i++)
 		{
-			if (format[i + 1] == '%')
-			{   _putchar('%');
-				i = i + 1;
-				length++;
-			}
-			else if (mod_character_s(format, i + 1) != '\0')
-			{   length += mod_character_s(format, i + 1)(call);
-				i = i + 1;
+			if (format[i] == '%')
+			{
+				if (format[i + 1] == '%')
+				{
+					count += _putchar(format[i]);
+					i++;
+				}
+				else if (format[i + 1] != '\0')
+				{
+					o = get_func(format[i + 1]);
+					count += (o ? o(ar_list) : _putchar(format[i]) + _putchar(format[i + 1]));
+					i++;
+				}
 			}
 			else
-			{ _putchar(format[i]);
-				length++;
-			}
+				count += _putchar(format[i]);
 		}
-		else
-		{ _putchar(format[i]);
-			length++;
-		}
+		va_end(ar_list);
 	}
-	va_end(call);
-	return (length);
+
+	return (count);
 }

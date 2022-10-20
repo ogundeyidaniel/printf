@@ -1,35 +1,55 @@
-.\" Manpage for _printf.
-.TH _printf (3) "16 Mar 2021" "1.0" "_printf manpage"
-.so man3./_printf
+.TH _PRINTF 2 "20 OCT 2022" "0.6" "ALX Printf"
 .SH NAME
-    _printf \- format and print data
+_printf - Print data about the format
 .SH SYNOPSIS
-	#include "main.h"
-.br
-	_printf [FORMAT] ARGUMENT...
-.br
-	int _printf(const char *format, ...);
+.B _printf (
+.I char *FORMAT
+,
+.I [ARGUMENT]...
+)
 .SH DESCRIPTION
-    Prints ARGUMENTS acording to format.
-.br
-	%% prints one %
-.br
-	%s prints a string
-.br
-	%c prints a character
-.br
-	%d prints an integer
-.br
-	%i prints an integer
-.br
-	%r prints a string in reverse
-.SH EXAMPLE IMPLEMENTATION
-    _printf("Hello World!");
-.br
-    output: Hello world!
-.SH RETURN VALUE
-    Return: the length of the string that is printing.
-.SH BUGS
-    No known bugs.
+Print the FORMAT in string, after interpreting the directives with '%'
+.IReturn:
+Print the numbers of characters excluding the Null-Byte
+Print the ARGUMENT(s) according to FORMAT:
+.PP
+.B %c
+	Print the characters calling the function and returning in character ASCII
+.PP
+.B %s
+	Print a array of characters.
+.PP
+.B %d
+	Take the argument, the convert of string to handle and print the decimal number of the character ASCII
+.PP
+.B %i
+	Take the argument, the convert of string to handle and print the integer number of the character ASCII	
+.SH EXAMPLES OF USE
+.B Characters
+.PP
+_printf("Character with _print:[%c][%c][%c][%c]\n", 'S', 't', 'r', 'i');
+.PP
+.I Output:
+Stri
+.PP
+.B Strings
+.PP
+_printf("String:[%s]\n", "I am a string !");
+.PP
+.I Output:
+I am a string
+.PP
+.B Decimal and Integers
+.PP
+_printf("Actual: %i\n", INT_MIN);
+_printf("Actual: %i\n", INT_MAX);
+.I Output:
+-2147483648
++2147483647
+.SH SEE ALSO
+.I printf(1) _printf(2) printf(3)
+.SH REPORTING BUGS
+No known bugs.
+.PP
 .SH AUTHOR
-   Ogundeyi Daniel
+Written by Ogundeyi Daniel.
